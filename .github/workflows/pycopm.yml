@@ -30,7 +30,7 @@ jobs:
     - name: Install OPM Flow dependencies
       run: |
         brew uninstall cmake
-        brew install boost cmake openblas suite-sparse
+        brew install boost@1.85 cmake openblas suite-sparse
 
     - name: Build OPM Flow
       run: |
