@@ -36,7 +36,6 @@ jobs:
       run: |
         chmod u+x build_dune_and_opm-flow_macOS.bash
         ./build_dune_and_opm-flow_macOS.bash
-        alias flow='/home/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow_gaswater'
         
     - name: Install pycopm
       run: |
@@ -47,4 +46,14 @@ jobs:
     - name: Run the example
       run: |
         pushd pycopm
-        pycopm -i examples/decks/HELLO_WORLD.DATA -c 5,5,1 -m all
+        pycopm -i examples/decks/HELLO_WORLD.DATA -c 5,5,1 -m all -f /home/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow_gaswater
+
+    - name: Check the example succeded
+      run: |
+        file="HELLO_WORLD_PYCOPM.EGRID"
+        if [[ -f "$file" ]]; then
+          echo "pycopm succeeded"
+        else
+          echo "pycopm failed"
+          exit 1
+        fi
