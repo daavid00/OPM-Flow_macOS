@@ -46,7 +46,7 @@ jobs:
     - name: Run the example
       run: |
         pushd pycopm
-        pycopm -i examples/decks/HELLO_WORLD.DATA -c 5,5,1 -m all -f /home/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow_gaswater
+        pycopm -i examples/decks/HELLO_WORLD.DATA -c 5,5,1 -m all -f /Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow_gaswater
 
     - name: Check the example succeded
       run: |
