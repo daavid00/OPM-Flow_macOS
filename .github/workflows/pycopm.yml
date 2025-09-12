@@ -29,6 +29,7 @@ jobs:
     
     - name: Install OPM Flow dependencies
       run: |
+        brew uninstall cmake
         brew install boost cmake openblas suite-sparse python@3.12
 
         CURRENT_DIRECTORY="$PWD"
