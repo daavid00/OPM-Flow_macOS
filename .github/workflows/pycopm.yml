@@ -41,10 +41,10 @@ jobs:
     - name: Install pycopm
       run: |
         git clone https://github.com/cssr-tools/pycopm.git
-        cd pycopm
+        pushd pycopm
         pip install .
       
     - name: Run the example
       run: |
-        cd examples/decks
-        pycopm -i HELLO_WORLD.DATA -c 5,5,1 -m all
+        pushd pycopm
+        pycopm -i examples/decks/HELLO_WORLD.DATA -c 5,5,1 -m all
