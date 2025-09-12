@@ -50,7 +50,7 @@ jobs:
 
     - name: Check the example succeded
       run: |
-        file="HELLO_WORLD_PYCOPM.EGRID"
+        file="/Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/pycopm/HELLO_WORLD_PYCOPM.EGRID"
         if [[ -f "$file" ]]; then
           echo "pycopm succeeded"
         else
