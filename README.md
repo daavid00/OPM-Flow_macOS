@@ -4,18 +4,20 @@
 
 # Running actions in macOS to test Python repositoires using OPM Flow
 
-This repository builds OPM Flow from the master branches in the latest available macOS in GitHub Actions.
+This repository builds [_OPM Flow_](https://opm-project.org/?page_id=19) from the master branches in the latest available macOS in GitHub Actions.
 
 See [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/pycopm.yml) that is
-run in GitHub actions for the installed dependencies.
+run in GitHub actions. Here, [_brew_](https://brew.sh) is used to install the required dependencies:
 
 ```bash
 brew install boost@1.85 cmake openblas suite-sparse
 ```
 
+while [_macports_](https://www.macports.org) could be also used.
+
 Notes:
 
-* Last month (August 14th, 2025) boost 1.89.0 was made available, which it is not compatible with OPM Flow (yet).
-Then, we install boost 1.85, and add the cmake path to the boost include folder (lines 22 and 29 in [_build_dune_and_opm-flow_macOS.bash_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/build_dune_and_opm-flow_macOS.bash)).
+* In August 14th 2025, boost 1.89.0 was made available, which it is not compatible with OPM Flow (yet).
+Then, we install boost 1.85, and add the cmake path to the boost include folder (line 59 in [_pycopm.yml_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/pycopm.yml)).
 
-* Uncomment [_this line _](https://github.com/daavid00/OPM-Flow_macOS/blob/main/build_dune_and_opm-flow_macOS.bash#L31) to build OPM Flow (Git Actions is kinda slow, that is why we only build the sub-simulator flow_gaswater in the CI).
+The [_pycopm_](https://github.com/cssr-tools/pycopm) Python tool is used to demonstrate the succesful OPM Flow installation by running the [_tests_](https://github.com/cssr-tools/pycopm/tree/main/tests) and [_the hello world example_](https://cssr-tools.github.io/pycopm/examples.html#hello-world).
