@@ -11,14 +11,9 @@ See [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github
 run in GitHub actions. Here, [_brew_](https://brew.sh) is used to install the required dependencies:
 
 ```bash
-brew install boost@1.85 cmake openblas suite-sparse
+brew install boost openblas suite-sparse cmake
 ```
 
 while [_macports_](https://www.macports.org) could be also used to install the above dependencies instead of brew.
-
-Notes:
-
-* In August 14th 2025, boost 1.89.0 was made available, which it is not compatible with OPM Flow (yet).
-Then, we install boost 1.85, and add the cmake path to the boost include folder (line 59 in [_ci_pycopm_macos.yml_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml#L59)).
 
 The [_pycopm_](https://github.com/cssr-tools/pycopm) Python tool is used to demonstrate the succesful OPM Flow installation by running the [_tests_](https://github.com/cssr-tools/pycopm/tree/main/tests) and [_the hello world example_](https://cssr-tools.github.io/pycopm/examples.html#hello-world).

@@ -30,7 +30,7 @@ jobs:
     - name: Install OPM Flow dependencies
       run: |
         brew uninstall cmake
-        brew install boost@1.85 cmake openblas suite-sparse
+        brew install boost openblas suite-sparse cmake
         
     - name: Install pycopm in the Python virtual environment vpycopm
       run: |
@@ -56,11 +56,8 @@ jobs:
         do  git clone https://github.com/OPM/opm-$repo.git
             mkdir build/opm-$repo
             cd build/opm-$repo
-            cmake -DPYTHON_EXECUTABLE=$(which python) -DOPM_ENABLE_PYTHON=ON -DWITH_NDEBUG=1 -DUSE_MPI=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/boost@1.85/include;$CURRENT_DIRECTORY/dune-common/build-cmake;$CURRENT_DIRECTORY/dune-grid/build-cmake;$CURRENT_DIRECTORY/dune-geometry/build-cmake;$CURRENT_DIRECTORY/dune-istl/build-cmake;$CURRENT_DIRECTORY/build/opm-common;$CURRENT_DIRECTORY/build/opm-grid" $CURRENT_DIRECTORY/opm-$repo
-            if [[ $repo == common ]]; then
-              make -j5 opm$repo
-              make -j5 opmcommon_python
-            elif [[ $repo == simulators ]]; then
+            cmake -DWITH_NDEBUG=1 -DUSE_MPI=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CURRENT_DIRECTORY/dune-common/build-cmake;$CURRENT_DIRECTORY/dune-grid/build-cmake;$CURRENT_DIRECTORY/dune-geometry/build-cmake;$CURRENT_DIRECTORY/dune-istl/build-cmake;$CURRENT_DIRECTORY/build/opm-common;$CURRENT_DIRECTORY/build/opm-grid" $CURRENT_DIRECTORY/opm-$repo
+            if [[ $repo == simulators ]]; then
               make -j5 flow
             else
               make -j5 opm$repo
@@ -72,7 +69,6 @@ jobs:
       run: |
         pushd pycopm
         source vpycopm/bin/activate
-        export PYTHONPATH=$PYTHONPATH:/Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-common/python
         pytest --cov=pycopm --cov-report term-missing tests/ --flow /Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow
 
     - name: Run the pycopm hello world example (globally exporting the OPM Flow executable path)
