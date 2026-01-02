@@ -17,3 +17,8 @@ brew install boost openblas suite-sparse cmake
 while [_macports_](https://www.macports.org) could be also used to install the above dependencies instead of brew.
 
 The [_pycopm_](https://github.com/cssr-tools/pycopm) Python tool is used to demonstrate the succesful OPM Flow installation by running the [_tests_](https://github.com/cssr-tools/pycopm/tree/main/tests) and [_the hello world example_](https://cssr-tools.github.io/pycopm/examples.html#hello-world).
+
+To install the 2025.10 release instead of building OPM Flow from master (the release is twice a year), this can be achieved by:
+```bash
+brew install opm-simulators
+```
