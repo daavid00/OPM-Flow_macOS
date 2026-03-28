@@ -50,7 +50,7 @@ jobs:
         for repo in common grid simulators
         do  git clone https://github.com/OPM/opm-$repo.git
             mkdir build/opm-$repo && cd build/opm-$repo
-            cmake -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang++ -DWITH_NDEBUG=1 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CURRENT_DIRECTORY/build/ThirdParty" $CURRENT_DIRECTORY/opm-$repo
+            cmake -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang++ -DWITH_NDEBUG=1 -DUSE_GPU_BRIDGE=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CURRENT_DIRECTORY/build/ThirdParty" $CURRENT_DIRECTORY/opm-$repo
             if [[ $repo == simulators ]]; then
               make -j5 flow
             else
