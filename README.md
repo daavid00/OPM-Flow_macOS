@@ -1,5 +1,5 @@
 [![Build Status](https://github.com/daavid00/OPM-Flow_macOS/actions/workflows/ci_pycopm_macos.yml/badge.svg)](https://github.com/daavid00/OPM-Flow_macOS/actions/workflows/ci_pycopm_macos.yml)
-<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.13-blue.svg"></a>
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.14-blue.svg"></a>
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # Running actions in macOS to test Python repositoires using OPM Flow
@@ -10,7 +10,7 @@ See [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github
 run in GitHub actions. Here, [_brew_](https://brew.sh) is used to install the required dependencies:
 
 ```bash
-brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20
+brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20 hdf5 pkg-config
 ```
 
 while [_macports_](https://www.macports.org) could be also used to install the above dependencies instead of brew.
@@ -21,7 +21,7 @@ You can check if the installation of OPM Flow succeded by typing in the terminal
 
 ## Tip
 
-To install the 2026.02 release instead of building all dune modules, trilinos, and OPM Flow from the source code as it is done in [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml), this can be achieved by simply typing:
+To install the 2026.04 release instead of building all dune modules, trilinos, and OPM Flow from the source code as it is done in [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml), this can be achieved by simply typing:
 ```bash
 brew install cssr-tools/opm/opm-simulators
 ```

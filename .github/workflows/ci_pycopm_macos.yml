@@ -16,15 +16,15 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Set up Python 3.13
+    - name: Set up Python 3.14
       uses: actions/setup-python@v2
       with:
-        python-version: 3.13
+        python-version: 3.14
     
     - name: Install OPM Flow dependencies
       run: |
         brew uninstall gcc cmake
-        brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20
+        brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20 hdf5 pkg-config
 
     - name: Build Third party dependecies (dune modules and Trilinos) and OPM Flow
       run: |
@@ -33,7 +33,7 @@ jobs:
         mkdir build/ThirdParty
 
         git clone https://github.com/trilinos/Trilinos.git
-        cd Trilinos && git checkout trilinos-release-17-0-0
+        cd Trilinos && git checkout trilinos-release-17-1-0
         mkdir build && cd build
         cmake -DBUILD_SHARED_LIBS=ON -DTPL_ENABLE_MPI=ON -DTrilinos_ENABLE_ALL_PACKAGES=OFF -DTrilinos_ENABLE_Zoltan=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$CURRENT_DIRECTORY/build/ThirdParty" $CURRENT_DIRECTORY/Trilinos
         make -j5 && make install
@@ -66,6 +66,7 @@ jobs:
         python3 -m venv vpycopm
         source vpycopm/bin/activate
         pip install --upgrade pip setuptools wheel
+        export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig" # The ert dependency in Python 3.14 and macOs requires building some wheels, then this is required so Meson can find pkgconfig
         pip install .
         pip install -r dev-requirements.txt
 
