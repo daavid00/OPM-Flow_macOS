@@ -1,30 +1,23 @@
 name: Run pycopm in macOS
 
 on:
- push:
-   branches:
-     - main
  pull_request:
    
 jobs:
   run-pycopm-local:
+    permissions:
+      contents: read
     timeout-minutes: 120
-    runs-on: macos-latest
+    runs-on: macos-26
+    env:
+      HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Set up Python 3.14
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.14
+    - uses: actions/checkout@v5
     
     - name: Install OPM Flow dependencies
       run: |
-        brew uninstall gcc cmake
-        brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20 hdf5 pkg-config
+        brew install boost openblas suite-sparse open-mpi metis cjson zlib gfortran gcc fmt hdf5 # cmake pkg-config already installed in GitHub Actions runners
 
     - name: Build Third party dependecies (dune modules and Trilinos) and OPM Flow
       run: |
@@ -50,7 +43,7 @@ jobs:
         for repo in common grid simulators
         do  git clone https://github.com/OPM/opm-$repo.git
             mkdir build/opm-$repo && cd build/opm-$repo
-            cmake -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@20/bin/clang++ -DWITH_NDEBUG=1 -DUSE_GPU_BRIDGE=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CURRENT_DIRECTORY/build/ThirdParty" $CURRENT_DIRECTORY/opm-$repo
+            cmake -DWITH_NDEBUG=1 -DUSE_GPU_BRIDGE=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CURRENT_DIRECTORY/build/ThirdParty" $CURRENT_DIRECTORY/opm-$repo
             if [[ $repo == simulators ]]; then
               make -j5 flow
             else
@@ -63,7 +56,7 @@ jobs:
       run: |
         git clone https://github.com/cssr-tools/pycopm.git
         pushd pycopm
-        python3 -m venv vpycopm
+        python3.14 -m venv vpycopm
         source vpycopm/bin/activate
         pip install --upgrade pip setuptools wheel
         export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig" # The ert dependency in Python 3.14 and macOs requires building some wheels, then this is required so Meson can find pkgconfig
@@ -74,7 +67,7 @@ jobs:
       run: |
         pushd pycopm
         source vpycopm/bin/activate
-        pytest --cov=pycopm --cov-report term-missing tests/ --flow /Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow
+        pytest --cov=pycopm --cov-report term-missing --flow /Users/runner/work/OPM-Flow_macOS/OPM-Flow_macOS/build/opm-simulators/bin/flow tests/ --exitfirst
 
     - name: Run the pycopm hello world example (globally exporting the OPM Flow executable path)
       run: |
