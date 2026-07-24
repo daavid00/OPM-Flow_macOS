@@ -4,13 +4,13 @@
 
 # Running actions in macOS to test Python repositoires using OPM Flow
 
-This repository builds [_OPM Flow_](https://opm-project.org/?page_id=19) from the master branches with support for mpirun in the latest available macOS in GitHub Actions, showing the status and details of the build in the [_Actions_](https://github.com/daavid00/OPM-Flow_macOS/actions).
+This repository builds [_OPM Flow_](https://opm-project.org/?page_id=19) from the master branches with support for mpirun in macOS 26 in GitHub Actions, showing the status and details of the build in the [_Actions_](https://github.com/daavid00/OPM-Flow_macOS/actions).
 
 See [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml) that is
 run in GitHub actions. Here, [_brew_](https://brew.sh) is used to install the required dependencies:
 
 ```bash
-brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt llvm@20 hdf5 pkg-config
+brew install boost openblas suite-sparse cmake open-mpi metis cjson zlib gfortran gcc fmt hdf5 pkg-config
 ```
 
 while [_macports_](https://www.macports.org) could be also used to install the above dependencies instead of brew.
@@ -21,7 +21,9 @@ You can check if the installation of OPM Flow succeded by typing in the terminal
 
 ## Tip
 
-To install the 2026.04 release instead of building all dune modules, trilinos, and OPM Flow from the source code as it is done in [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml), this can be achieved by simply typing:
+To install the 2026.07 interim release instead of building all dune modules, trilinos, and OPM Flow from the source code as it is done in [_this script_](https://github.com/daavid00/OPM-Flow_macOS/blob/main/.github/workflows/ci_pycopm_macos.yml), this can be achieved by simply typing:
 ```bash
-brew install cssr-tools/opm/opm-simulators
+brew tap cssr-tools/opm
+brew trust cssr-tools/opm
+brew install cssr-tools/opm/opm-simulators -y
 ```
